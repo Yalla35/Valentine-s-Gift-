@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine’s Day</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --pink: #e85d75;
+  --soft: #fdf1f4;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Georgia', serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1b1f3b, #050510);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ===== Falling Hearts ===== */
+.heart {
+  position: fixed;
+  top: -40px;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ===== Screens ===== */
+.screen {
+  display: none;
+  width: 92%;
+  max-width: 420px;
+  text-align: center;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Landing ===== */
+.title {
+  font-size: 34px;
+  line-height: 1.25;
+  text-shadow: 0 0 20px rgba(232,93,117,0.6);
+}
+
+.subtitle {
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* ===== Card ===== */
+.card {
+  background: rgba(255,255,255,0.97);
+  color: #333;
+  padding: 22px;
+  border-radius: 22px;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.35);
+}
+
+/* ===== Menu ===== */
+.menu {
+  display: grid;
+  gap: 16px;
+}
+
+.menu-item {
+  background: linear-gradient(135deg, #fff, var(--soft));
+  padding: 18px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.menu-item h3 {
+  margin: 0;
+  color: var(--pink);
+}
+
+/* ===== Letter ===== */
+.letter {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ===== Gallery ===== */
+.gallery-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.gallery-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--pink);
+}
+
+.gallery-header span {
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* ===== Buttons ===== */
+.btn {
+  margin-top: 18px;
+  background: none;
+  border: none;
+  color: var(--pink);
+  font-size: 14px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LANDING -->
+<div id="landing" class="screen active">
+  <div class="title">Happy Valentine’s Day 💖</div>
+  <div class="subtitle">Tap for a surprise ✨</div>
+</div>
+
+<!-- MENU -->
+<div id="menuScreen" class="screen">
+  <div class="card">
+    <div class="menu">
+      <div class="menu-item" onclick="openMessage()">
+        <h3>Message</h3>
+        <p>A letter written just for you</p>
+      </div>
+      <div class="menu-item" onclick="openGallery()">
+        <h3>Gallery</h3>
+        <p>Basta picture ni</p>
+      </div>
+    </div>
+    <button class="btn" onclick="goLanding()">← Back</button>
+  </div>
+</div>
+
+<!-- MESSAGE -->
+<div id="messageScreen" class="screen">
+  <div class="card">
+    <div class="letter">
+      <p>
+        Hi bal AHAHAHAHAHAH Happy Valentine’s Day.<br>
+        Ayaw na pa dungog-dungog sa gc bi, naa na buhatan<br> 
+        na tika, total wala paman kay uyab ako nalang sa <br>
+        hatag ug gift sa imo AHAHAHAH
+      </p>
+      <p><b>
+        Happy Valentine’s Day 💖</b>
+      </p>
+    </div>
+    <button class="btn" onclick="goMenu()">← Back</button>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div id="galleryScreen" class="screen">
+  <div class="card">
+
+    <div class="gallery-header">
+      <h2>Happy Valentine’s Day</h2>
+      <span>April Joy 💕</span>
+    </div>
+
+    <div class="gallery">
+      <img src="IMG_20260207_194409_219.jpg">
+      <img src="IMG_20260207_194358_588.jpg">
+      <img src="IMG_20260207_194344_973.jpg">
+      <img src="IMG_20260207_194922_987.jpg">
+    </div>
+
+    <button class="btn" onclick="goMenu()">← Back</button>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/02/audio_91b8edb0ab.mp3">
+</audio>
+
+<script>
+const music = document.getElementById("music");
+
+function show(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+document.getElementById("landing").onclick = () => {
+  show("menuScreen");
+  music.volume = 0.4;
+  music.play();
+  startHearts();
+};
+
+function openMessage() { show("messageScreen"); }
+function openGallery() { show("galleryScreen"); }
+function goMenu() { show("menuScreen"); }
+function goLanding() { show("landing"); }
+
+function startHearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = ["❤","💖","🌸","✨"][Math.floor(Math.random()*4)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = Math.random() * 16 + 14 + "px";
+    h.style.animationDuration = Math.random() * 6 + 6 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 12000);
+  }, 500);
+}
+</script>
+
+</body>
+</html>
